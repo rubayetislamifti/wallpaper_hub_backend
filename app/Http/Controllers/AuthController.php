@@ -41,7 +41,6 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'User registered successfully. Please verify your email using the OTP sent.',
-            'otp'=>$user->otp
         ], 201);
     }
 
