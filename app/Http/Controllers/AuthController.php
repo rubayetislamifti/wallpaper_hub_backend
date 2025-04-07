@@ -34,7 +34,6 @@ class AuthController extends Controller
             'otp_expires_at' => $expiresAt,
         ]);
 
-        // Send OTP to email
         Mail::raw("Your verification OTP is: $otp\nIt is valid for $expiresAt minutes.", function ($message) use ($user) {
             $message->to($user->email)
                 ->subject('Verify your email');
@@ -89,6 +88,56 @@ class AuthController extends Controller
             'token' => $token
         ], 200);
     }
+
+    public function resetPasswordOTP(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        $otp = rand(1000, 9999);
+        $expiresAt = Carbon::now()->addMinutes(2);
+
+        $user = User::where('email', $request->email)->first();
+        $user->reset_otp = $otp;
+        $user->reset_otp_expires_at = $expiresAt;
+        $user->save();
+
+        Mail::raw("Your password reset OTP is: $otp\nIt is valid for $expiresAt minutes.", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Password Reset OTP');
+        });
+
+        return response()->json([
+            'message' => 'OTP sent to your email address.'
+        ]);
+    }
+
+    public function resetPasswordWithOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|string',
+            'password' => 'required|string|min:6|confirmed', // password_confirmation
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || $user->reset_otp !== $request->otp) {
+            return response()->json(['message' => 'Invalid OTP'], 400);
+        }
+
+        if (Carbon::now()->gt($user->reset_otp_expires_at)) {
+            return response()->json(['message' => 'OTP has expired'], 400);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->reset_otp = null;
+        $user->reset_otp_expires_at = null;
+        $user->save();
+
+        return response()->json(['message' => 'Password reset successfully']);
+    }
+
 
     public function logout(Request $request)
     {
