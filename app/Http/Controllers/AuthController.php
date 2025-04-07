@@ -95,7 +95,7 @@ class AuthController extends Controller
             'email' => 'required|email',
         ]);
         $otp = rand(1000, 9999);
-        $expiresAt = Carbon::now()->addMinutes(2);
+        $expiresAt = Carbon::now()->addMinutes(10);
 
         $user = User::where('email', $request->email)->first();
         $user->reset_otp = $otp;
@@ -117,7 +117,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'otp' => 'required|string',
-            'password' => 'required|string|min:6|confirmed', // password_confirmation
+            'password' => 'required|string|min:6', // password_confirmation
         ]);
 
         $user = User::where('email', $request->email)->first();
