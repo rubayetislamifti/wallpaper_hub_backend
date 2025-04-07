@@ -23,8 +23,8 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $otp = rand(100000, 999999); // 6-digit OTP
-        $expiresAt = Carbon::now()->addMinutes(10);
+        $otp = rand(1000, 9999);
+        $expiresAt = Carbon::now()->addMinutes(2);
 
         $user = User::create([
             'name' => $request->name,
@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
 
         // Send OTP to email
-        Mail::raw("Your verification OTP is: $otp", function ($message) use ($user) {
+        Mail::raw("Your verification OTP is: $otp\nIt is valid for $expiresAt minutes.", function ($message) use ($user) {
             $message->to($user->email)
                 ->subject('Verify your email');
         });
