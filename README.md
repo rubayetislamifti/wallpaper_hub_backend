@@ -19,7 +19,7 @@
 - `name` (string) — Username
 - `email` (string) — Must be a valid and unique email
 - `password` (string) — Minimum 6 characters
-- `password_confirmation` (string) — Must match `password`
+- `confirm_password` (string) — Must match `password`
 
 On success: Sends a 4-digit OTP to the user's email.  
 OTP is valid for 2 minutes.
@@ -68,7 +68,7 @@ OTP is valid for 10 minutes.
 - `email` (string)
 - `otp` (string)
 - `password` (string) — Minimum 6 characters
-- `password_confirmation` (string) — Must match `password`
+- `confirm_password` (string) — Must match `password`
 
 Updates the user's password if OTP is correct and not expired.
 

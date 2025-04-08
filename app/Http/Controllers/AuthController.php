@@ -83,8 +83,17 @@ class AuthController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login successful',
-            'token' => $token
+            'status' => true,
+            'message' => 'User logged in successfully.',
+            'code' => 200,
+            'token_type' => 'bearer',
+            'token' => $token,
+            'data' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_verified' => $user->email_verified_at ? 1 : 0, // Checking if email is verified
+            ]
         ], 200);
     }
 
@@ -136,7 +145,6 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password reset successfully']);
     }
-
 
     public function logout(Request $request)
     {
