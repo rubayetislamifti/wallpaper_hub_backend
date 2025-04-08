@@ -8,7 +8,10 @@
 3. `POST /api/verify-otp` — Verify Email OTP
 4. `POST /api/reset-password` — Send OTP for Password Reset
 5. `POST /api/confirm-password` — Confirm New Password Using OTP
-6. `POST /api/logout` — Logout (Requires Auth Token)
+6. `GET /api/user/{id}` - Show the user information after authenticate
+7. `POST /api/user/update/{id}` - Update the user profile.
+8. `GET /api/user` - All user list
+8. `POST /api/logout` — Logout (Requires Auth Token)
 
 ---
 
@@ -71,6 +74,29 @@ OTP is valid for 10 minutes.
 - `confirm_password` (string) — Must match `password`
 
 Updates the user's password if OTP is correct and not expired.
+
+---
+
+### All User Information (`/api/user`)
+It will show the all user information. This link is not authenticate. 
+
+---
+### Individual User Information (`/api/user/{id}`)
+
+It will show the individual and authenticate user information. This link will be showed the username, email, bio and avatar(profile picture).
+
+---
+### Update User Profile (`/api/user/update/{id}`)
+
+**Parameters**
+
+- `user_id` (unsignedbiginteger)
+- `username` (string)
+- `email` (string)
+- `bio` (long text)
+- `avatar` (file)
+
+It will be updated the user profile.
 
 ---
 
