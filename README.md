@@ -115,7 +115,7 @@ In this link all the wallpapers will be showed. With its name, price and image.
 It will store the wallpaper in the database.
 
 ---
-### Update Wallpaper (`/api/wallpaper/update/{id})
+### Update Wallpaper (`/api/wallpaper/update/{id}`)
 **Parameters**
 - `name`(string)
 - `price`(decimal) Total 10 numbers with 2 place after the dot(.). Like `1500.00`.
