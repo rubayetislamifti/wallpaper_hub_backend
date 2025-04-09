@@ -11,7 +11,10 @@
 6. `GET /api/user/{id}` - Show the user information after authenticate
 7. `POST /api/user/update/{id}` - Update the user profile.
 8. `GET /api/user` - All user list
-8. `POST /api/logout` — Logout (Requires Auth Token)
+9. `GET /api/wallpaper` - All wallpaper.
+10. `POST /api/wallpaper/store` - Upload wallpaper
+11. `POST /api/wallpaper/update/{id}` - Update wallpaper
+12. `POST /api/logout` — Logout (Requires Auth Token)
 
 ---
 
@@ -96,10 +99,31 @@ It will show the individual and authenticate user information. This link will be
 - `bio` (long text)
 - `avatar` (file)
 
-It will be updated the user profile.
+It will be updated the user profile. **The avatar must be under 8MB.**
 
 ---
+### Wallpaper (`/api/wallpaper`)
+In this link all the wallpapers will be showed. With its name, price and image.
 
+---
+### Store Wallpaper (`/api/wallpaper/store`)
+**Parameters**
+- `name`(string)
+- `price`(decimal) Total 10 numbers with 2 place after the dot(.). Like `1500.00`.
+- `image`(file) Image must be under **15MB**.
+
+It will store the wallpaper in the database.
+
+---
+### Update Wallpaper (`/api/wallpaper/update/{id})
+**Parameters**
+- `name`(string)
+- `price`(decimal) Total 10 numbers with 2 place after the dot(.). Like `1500.00`.
+- `image`(file) Image must be under **15MB**.
+
+It will update the wallpaper information in ID-wise. For id 1 it will just the data for id 1.
+
+---
 ### Logout (`/api/logout`)
 
 Requires the auth token in the request header (`Authorization: Bearer {token}`)  

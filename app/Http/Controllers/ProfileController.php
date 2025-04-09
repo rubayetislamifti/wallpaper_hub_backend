@@ -79,7 +79,7 @@ class ProfileController extends Controller
             'username' => 'nullable|string|max:255',
             'email' => 'nullable|email',
             'bio' => 'nullable|string',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:8192',
         ]);
         $user = UserProfile::where('user_id',$id)->first();
 
