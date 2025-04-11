@@ -12,11 +12,12 @@ class WallpaperController extends Controller
      */
     public function index()
     {
-        $wallpaper = wallpaper::select('id', 'name', 'image','price')->get();
+        $wallpaper = wallpaper::select('id', 'name', 'image','price','category_id')->get();
 
         return response()->json([
             'status' => true,
-            'data'=>$wallpaper
+            'data'=>$wallpaper,
+            'category_name'=>$wallpaper->category->category_name
         ],200);
     }
 
@@ -36,10 +37,11 @@ class WallpaperController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'price'=>'required|integer',
+            'category_id' => 'required|exists:categories,id',
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:15360',
         ]);
 
-        $data=$request->only(['name','price']);
+        $data=$request->only(['name','price','category_id']);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -59,6 +61,8 @@ class WallpaperController extends Controller
             'id'=>$wallpaper->id,
             'name'=>$wallpaper->name,
             'price'=>$wallpaper->price,
+            'category_id'=>$wallpaper->category_id,
+            'category_name'=>$wallpaper->category->category_name,
             'image'=>asset($wallpaper->image),
         ],200);
 
@@ -69,7 +73,17 @@ class WallpaperController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $wallpaper = wallpaper::find($id);
+        return response()->json([
+            'status'=>true,
+            'id'=>$wallpaper->id,
+            'name'=>$wallpaper->name,
+            'price'=>$wallpaper->price,
+            'category_id'=>$wallpaper->category_id,
+            'category_name'=>$wallpaper->category->category_name,
+            'image'=>asset($wallpaper->image),
+        ],200);
+
     }
 
     /**
@@ -88,12 +102,13 @@ class WallpaperController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'price'=>'required|integer',
+           'category_id' => 'required|exists:categories,id',
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:15360',
         ]);
 
         $wallpaper = wallpaper::find($id);
 
-        $data=$request->only(['name','price']);
+        $data=$request->only(['name','price','category_id']);
 
         if ($request->hasFile('image')) {
             if ($wallpaper && $wallpaper->image) {
@@ -119,6 +134,8 @@ class WallpaperController extends Controller
             'id'=>$wallpaper->id,
             'name'=>$wallpaper->name,
             'price'=>$wallpaper->price,
+            'category_id'=>$wallpaper->category_id,
+            'category_name'=>$wallpaper->category->category_name,
             'image'=>asset($wallpaper->image),
         ],200);
     }
@@ -128,6 +145,16 @@ class WallpaperController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $wallpaper = wallpaper::find($id);
+        if ($wallpaper->image) {
+            $imagePath = public_path('wallpapers/' . basename($wallpaper->image));
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        $wallpaper->delete();
+
+        return response()->json(['message' => 'Wallpaper deleted successfully.'], 200);
     }
 }

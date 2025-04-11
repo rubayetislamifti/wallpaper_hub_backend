@@ -14,7 +14,14 @@
 9. `GET /api/wallpaper` - All wallpaper.
 10. `POST /api/wallpaper/store` - Upload wallpaper
 11. `POST /api/wallpaper/update/{id}` - Update wallpaper
-12. `POST /api/logout` — Logout (Requires Auth Token)
+12. `GET /api/wallpaper/show/{id}` - Individual wallpaper
+13. `DELETE /api/wallpaper/{id}` - Delete wallpaper
+14. `GET /api/category` - All Category
+15. `POST /api/category/store` - Store Category
+16. `POST /api/category/update/{id}` - Update Category
+17. `GET /api/category/show/{id}` - Show Individual Category
+18. `DELETE /api/category/{id}` - Delete Category
+19. `POST /api/logout` — Logout (Requires Auth Token)
 
 ---
 
@@ -111,6 +118,7 @@ In this link all the wallpapers will be showed. With its name, price and image.
 - `name`(string)
 - `price`(decimal) Total 10 numbers with 2 place after the dot(.). Like `1500.00`.
 - `image`(file) Image must be under **15MB**.
+- `category_id` (unsignedbiginteger)
 
 It will store the wallpaper in the database.
 
@@ -120,8 +128,43 @@ It will store the wallpaper in the database.
 - `name`(string)
 - `price`(decimal) Total 10 numbers with 2 place after the dot(.). Like `1500.00`.
 - `image`(file) Image must be under **15MB**.
+- `category_id` (unsignedbiginteger)
 
 It will update the wallpaper information in ID-wise. For id 1 it will just the data for id 1.
+
+---
+### Show Wallpaper (`/api/wallpaper/show/{id}`)
+It will show the individual wallpaper from the wallpaper id.
+
+---
+### Delete Wallpaper (`/api/wallpaper/{id}`)
+It will delete the wallpaper with its image from storage.
+
+---
+### All Category (`/api/category`)
+It will show the all category from database.
+
+---
+### Store Category (`/api/category/store`)
+**Parameter**
+- `category_name` - (string)
+
+It will be show the category name and category id.
+
+---
+### Show Category (`/api/category/show/{id}`)
+It will show individual category name.
+
+---
+### Update Category (`/api/category/update/{id}`)
+**Parameter**
+- `category_name` - (string)
+
+It will update category name and show the category name and category id.
+
+---
+### Delete Category (`/api/category/{id}`)
+It will delete the category from the database
 
 ---
 ### Logout (`/api/logout`)
