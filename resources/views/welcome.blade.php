@@ -21,7 +21,7 @@
 <section class="text-center py-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
     <h2 class="text-4xl font-bold mb-4">Welcome to Wallpaper HUB API</h2>
     <p class="text-lg mb-6">This project provides a RESTful API to fetch stunning wallpapers programmatically.</p>
-    <a href="#" onclick="alert('API Docs coming soon!')" class="bg-white text-indigo-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+    <a href="https://github.com/trodevit/wallpaper_hub_backend/blob/main/README.md" target="_blank" class="bg-white text-indigo-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
         View API Documentation
     </a>
 </section>
