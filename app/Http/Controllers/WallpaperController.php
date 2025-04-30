@@ -12,12 +12,12 @@ class WallpaperController extends Controller
      */
     public function index()
     {
-        $wallpaper = wallpaper::select('id', 'name', 'image','price','category_id')->get();
+        $wallpaper = wallpaper::all();
 
         return response()->json([
             'status' => true,
             'data'=>$wallpaper,
-            'category_name'=>$wallpaper->category->category_name
+//            'category_name'=>$wallpaper->category->category_name
         ],200);
     }
 

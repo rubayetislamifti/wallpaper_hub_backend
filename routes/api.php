@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WallpaperController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
@@ -33,5 +34,7 @@ Route::delete('/category/{id}',[CategoryController::class,'destroy']);
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user/{id}',[ProfileController::class,'show']);
     Route::post('/user/update/{id}',[ProfileController::class,'update']);
+
+    Route::post('/payment/store',[PaymentController::class,'store']);
     Route::post('/logout',[AuthController::class,'logout']);
 });
