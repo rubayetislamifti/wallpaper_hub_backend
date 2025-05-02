@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WallpaperController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\NotificationController;
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
@@ -30,6 +31,8 @@ Route::post('/category/store',[CategoryController::class,'store']);
 Route::post('/category/update/{id}',[CategoryController::class,'update']);
 Route::get('/category/show/{id}',[CategoryController::class,'show']);
 Route::delete('/category/{id}',[CategoryController::class,'destroy']);
+
+Route::post('/notification/send',[NotificationController::class,'sendNotification']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user/{id}',[ProfileController::class,'show']);
